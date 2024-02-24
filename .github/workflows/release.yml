@@ -9,7 +9,7 @@ jobs:
     name: Build
     runs-on: ubuntu-latest
     env: 
-        github_repo: $(basename ${{ github.repository }})
+        github_repo:  ${{ github.repository }}
     steps:
       - uses: actions/checkout@v4
       - name: copy file via ssh password
@@ -20,8 +20,6 @@ jobs:
           password: ${{ secrets.PASSWORD }}
           port: ${{ secrets.PORT }}
           source: .
-          target: /root/personal/${{env.github_repo}}/
+          target: /root/personal/$(basename ${{env.github_repo}})/
           overwrite: true
 
-
-         
