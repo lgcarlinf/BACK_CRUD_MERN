@@ -20,6 +20,6 @@ jobs:
           password: ${{ secrets.PASSWORD }}
           port: ${{ secrets.PORT }}
           source: .
-          target: /root/personal/$(basename ${{env.github_repo}})/
+          target: "/root/personal/$(basename ${GITHUB_REPOSITORY})/"
           overwrite: true
 
