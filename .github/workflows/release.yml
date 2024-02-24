@@ -20,7 +20,7 @@ jobs:
           password: ${{ secrets.PASSWORD }}
           port: ${{ secrets.PORT }}
           source: .
-          target: /root/personal/$github_repo/
+          target: /root/personal/${{env.github_repo}}/
           overwrite: true
 
 
