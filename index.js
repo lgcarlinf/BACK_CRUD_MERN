@@ -3,6 +3,7 @@ import connectDb from "./db/connect.js";
 import dotenv from "dotenv/config";
 import router from "./routes/itemRoute.js";
 import cors from "cors";
+import { createSwaggerDocs } from "./config/swagger.js";
 
 const app = express();
 const PORT = process.env.PORT || 4001;
@@ -32,5 +33,8 @@ const start = async () => {
 app.get("/", (req, res) => {
   res.status(200).send("Inicio");
 });
+
+createSwaggerDocs(app);
+
 start();
 console.log(process.env.MONGO_CONNECT);
