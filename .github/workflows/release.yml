@@ -21,7 +21,7 @@ jobs:
 
       - name: Deploy to VPS
         run: |
-          ssh -o StrictHostKeyChecking=no usuario@IP_DEL_VPS << 'EOF'
+          ssh -o StrictHostKeyChecking=no ${{ secrets.VPS_USER }}@${{ secrets.VPS_IP }} << 'EOF'
             cd /personal/BACK_CRUD_MERN
             git pull origin main  
             npm install           
