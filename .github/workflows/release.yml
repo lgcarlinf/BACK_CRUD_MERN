@@ -1,32 +1,30 @@
-name: scp files
+name: Deploy to VPS
 
 on:
   push:
-    tags:
-      - "release*"
+    branches:
+      - main
 
 jobs:
-  build:
-    name: Build
+  deploy:
     runs-on: ubuntu-latest
-    env: 
-      github_repo: ${{ github.repository }}
-    steps:
-      - uses: actions/checkout@v4
-      - name: Set repository name
-        run: echo "REPOSITORY_NAME=$(echo $GITHUB_REPOSITORY | grep -o '[^/]*$')" >> $GITHUB_ENV
-      - name: Print repository name
-        run: echo "Repository Name $REPOSITORY_NAME"
-      - name: copy file via ssh password
-        uses: appleboy/scp-action@v0.1.7
 
+    steps:
+
+      - name: Checkout the repository
+        uses: actions/checkout@v3
+
+      - name: Setup SSH
+        uses: webfactory/ssh-agent@v0.5.3
         with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}
-          password: ${{ secrets.PASSWORD }}
-          port: ${{ secrets.PORT }}
-          source: .
-          target: "/root/personal/${{ env.REPOSITORY_NAME }}/"
-          overwrite: true
-      
+          ssh-private-key: ${{ secrets.SSH_VPS }}
+
+      - name: Deploy to VPS
+        run: |
+          ssh -o StrictHostKeyChecking=no usuario@IP_DEL_VPS << 'EOF'
+            cd /personal/BACK_CRUD_MERN
+            git pull origin main  
+            npm install           
+            pm2 restart crud       
+          EOF
 
