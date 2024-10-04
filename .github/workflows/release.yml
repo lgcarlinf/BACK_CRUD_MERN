@@ -22,8 +22,10 @@ jobs:
       - name: Deploy to VPS
         run: |
           ssh -o StrictHostKeyChecking=no ${{ secrets.VPS_USER }}@${{ secrets.VPS_IP }} << 'EOF'
+            source ~/.bashrc
+            source ~/.profile
             cd personal/BACK_CRUD_MERN
-            git pull origin main  
+            git pull origin master  
             npm install           
             pm2 restart crud       
           EOF
