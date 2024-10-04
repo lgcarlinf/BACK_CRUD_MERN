@@ -17,7 +17,7 @@ jobs:
       - name: Setup SSH
         uses: webfactory/ssh-agent@v0.5.3
         with:
-          ssh-private-key: ${{ secrets.SSH_VPS }}
+          ssh-private-key: ${{ secrets.VPS_SSH }}
 
       - name: Deploy to VPS
         run: |
