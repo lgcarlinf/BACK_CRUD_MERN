@@ -1,4 +1,4 @@
-import express from "express";
+import express, { type Response } from "express";
 import connectDb from "./db/connect.js";
 import dotenv from "dotenv/config";
 import router from "./routes/itemRoute.js";
@@ -23,18 +23,17 @@ app.use("/api/v1/crud", router);
 //Connection
 const start = async () => {
   try {
-    await connectDb(process.env.MONGO_CONNECT);
+    connectDb(process.env.MONGO_CONNECT!);
     app.listen(PORT, () => console.log(`Server runnig on port ${PORT}`));
   } catch (error) {
     console.log(error);
   }
 };
 
-app.get("/", (req, res) => {
+app.get("/", (_req, res: Response) => {
   res.status(200).send("Inicio");
 });
 
 createSwaggerDocs(app);
 
 start();
-console.log(process.env.MONGO_CONNECT);
